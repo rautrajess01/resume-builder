@@ -1,0 +1,31 @@
+# Python cache files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Django migrations (optional, you may include if you want fresh migrations in container)
+*/migrations/*.pyc
+*/migrations/__pycache__/
+
+# Environment files
+.env
+
+# Git stuff
+.git
+.gitignore
+
+# Node/npm files (if you have frontend)
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Docker files (avoid nesting builds)
+Dockerfile
+docker-compose.yml
+
+# IDE/editor files
+.vscode/
+.idea/
+*.swp
+
