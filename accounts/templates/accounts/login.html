@@ -1,10 +1,35 @@
 {% extends 'layout.html' %}
-{% block body %}
-<h2>Login</h2>
 
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Login</button>
-</form>
+{% block title %}Login | Resume Builder{% endblock %}
+
+{% block body %}
+  <div class="mx-auto max-w-md space-y-6">
+    <header class="text-center">
+      <h1 class="text-xl font-semibold tracking-tight text-slate-900 dark:text-slate-100">
+        Login
+      </h1>
+      <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">
+        Access your dashboard and manage your resumes.
+      </p>
+    </header>
+
+    <form method="post" class="space-y-5">
+      {% csrf_token %}
+      <div class="space-y-4 prose prose-sm max-w-none dark:prose-invert">
+        {{ form.as_p }}
+      </div>
+
+      <button type="submit"
+              class="inline-flex w-full items-center justify-center rounded-lg bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-100 dark:bg-indigo-500 dark:hover:bg-indigo-600 dark:focus-visible:ring-offset-slate-900">
+        Login
+      </button>
+    </form>
+
+    <p class="text-center text-xs text-slate-500 dark:text-slate-400">
+      Don&apos;t have an account?
+      <a href="{% url 'register' %}" class="font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300">
+        Register
+      </a>
+    </p>
+  </div>
 {% endblock %}

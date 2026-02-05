@@ -1,17 +1,63 @@
 {% extends 'layout.html' %}
+
+{% block title %}My Resumes | Resume Builder{% endblock %}
+
 {% block body %}
-<h2>My Resumes</h2>
+  <div class="space-y-6">
+    <header class="flex items-center justify-between gap-3">
+      <div>
+        <h1 class="text-xl font-semibold tracking-tight text-slate-900 dark:text-slate-100">
+          My Resumes
+        </h1>
+        <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">
+          View, edit, and manage all the resumes you have created.
+        </p>
+      </div>
 
-<a href="{% url 'create_resume' %}">Create New Resume</a>
+      <a href="{% url 'create_resume' %}"
+         class="inline-flex items-center justify-center rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-100 dark:bg-indigo-500 dark:hover:bg-indigo-600 dark:focus-visible:ring-offset-slate-900">
+        + Create new resume
+      </a>
+    </header>
 
-<ul>
-{% for resume in resumes %}
-    <li>
-        {{ resume.full_name }}
-        <a href="{% url 'edit_resume' resume.id %}">Edit</a>
-        <a href="{% url 'delete_resume' resume.id %}">Delete</a>
-    </li>
-{% endfor %}
-</ul>
+    {% if resumes %}
+      <ul class="divide-y divide-slate-200 dark:divide-slate-800 rounded-xl border border-slate-200 bg-slate-50/80 dark:border-slate-800 dark:bg-slate-900/40">
+        {% for resume in resumes %}
+          <li class="flex flex-col gap-3 px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:px-5">
+            <div>
+              <p class="text-sm font-medium text-slate-900 dark:text-slate-100">
+                {{ resume.full_name }}
+              </p>
+              <p class="mt-0.5 text-xs text-slate-500 dark:text-slate-400">
+                Last updated: {{ resume.updated_at|default:resume.created_at|default:'' }}
+              </p>
+            </div>
 
+            <div class="flex flex-wrap items-center gap-2">
+              <a href="{% url 'preview_resume' resume.id %}"
+                 class="rounded-full border border-slate-300 px-3 py-1 text-xs font-medium text-slate-700 hover:border-indigo-500 hover:text-indigo-600 dark:border-slate-700 dark:text-slate-200 dark:hover:border-indigo-400 dark:hover:text-indigo-200">
+                Preview
+              </a>
+              <a href="{% url 'edit_resume' resume.id %}"
+                 class="rounded-full bg-indigo-600 px-3 py-1 text-xs font-medium text-white hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600">
+                Edit
+              </a>
+              <a href="{% url 'delete_resume' resume.id %}"
+                 class="rounded-full bg-rose-50 px-3 py-1 text-xs font-medium text-rose-700 hover:bg-rose-100 dark:bg-rose-900/40 dark:text-rose-200 dark:hover:bg-rose-900/60">
+                Delete
+              </a>
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <div class="rounded-lg border border-dashed border-slate-300 bg-slate-50 px-4 py-6 text-sm text-slate-500 dark:border-slate-700 dark:bg-slate-900/40 dark:text-slate-400">
+        You have not created any resumes yet.
+        <a href="{% url 'create_resume' %}" class="font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300">
+          Create your first resume
+        </a>
+        to get started.
+      </div>
+    {% endif %}
+  </div>
 {% endblock %}

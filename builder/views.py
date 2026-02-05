@@ -15,8 +15,13 @@ def create_resume(request):
         resume = form.save(commit=False)
         resume.user = request.user
         resume.save()
-        return redirect('resume_list')
-    return render(request, 'builder/form.html', {'form': form, 'title': 'Create New Resume', 'button_text': 'Save Resume'})
+        return redirect('preview_resume', id=resume.id)
+    return render(request, 'builder/form.html', {'form': form, 'title': 'Create New Resume', 'button_text': 'Preview'})
+
+@login_required
+def preview_resume(request, id):
+    resume = get_object_or_404(Resume, id=id, user=request.user)
+    return render(request, 'builder/preview.html', {'resume': resume})
 
 
 @login_required
@@ -25,7 +30,7 @@ def edit_resume(request, id):
     form = ResumeForm(request.POST or None, instance=resume)
     if request.method == "POST" and form.is_valid():
         form.save()
-        return redirect('resume_list')
+        return redirect('preview_resume', id=id)
     return render(request, 'builder/form.html', {'form': form, 'title': 'Edit Resume', 'button_text': 'Update Resume'})
 
 def delete_resume(request, id):

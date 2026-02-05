@@ -1,0 +1,70 @@
+{% extends 'layout.html' %}
+
+{% block title %}Preview: {{ resume.full_name }} | Resume Builder{% endblock %}
+
+{% block body %}
+  <div class="space-y-6">
+    <header class="flex items-center justify-between gap-3">
+      <div>
+        <h1 class="text-xl font-semibold tracking-tight text-slate-900 dark:text-slate-100">
+          Resume preview
+        </h1>
+        <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">
+          This is how your resume will appear to others.
+        </p>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-2">
+        <a href="{% url 'edit_resume' resume.id %}"
+           class="rounded-full bg-indigo-600 px-3 py-1.5 text-xs font-medium text-white shadow-sm hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600">
+          Edit resume
+        </a>
+        <a href="{% url 'resume_list' %}"
+           class="rounded-full border border-slate-300 px-3 py-1.5 text-xs font-medium text-slate-700 hover:border-indigo-500 hover:text-indigo-600 dark:border-slate-700 dark:text-slate-200 dark:hover:border-indigo-400 dark:hover:text-indigo-200">
+          Back to list
+        </a>
+      </div>
+    </header>
+
+    <article class="rounded-2xl border border-slate-200 bg-white px-6 py-6 shadow-sm dark:border-slate-800 dark:bg-slate-900 print:border-0 print:shadow-none">
+      <header class="border-b border-slate-200 pb-4 dark:border-slate-800">
+        <h2 class="text-2xl font-semibold tracking-tight text-slate-900 dark:text-slate-50">
+          {{ resume.full_name }}
+        </h2>
+        <p class="mt-1 text-sm text-slate-600 dark:text-slate-300">
+          {{ resume.email }}{% if resume.email and resume.phone %} &middot; {% endif %}{{ resume.phone }}
+        </p>
+      </header>
+
+      <div class="mt-5 space-y-5 text-sm leading-relaxed text-slate-800 dark:text-slate-100">
+        <section>
+          <h3 class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">
+            Skills
+          </h3>
+          <div class="mt-1 whitespace-pre-line text-sm">
+            {{ resume.skills|default:"Not provided" }}
+          </div>
+        </section>
+
+        <section>
+          <h3 class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">
+            Education
+          </h3>
+          <div class="mt-1 whitespace-pre-line text-sm">
+            {{ resume.education|default:"Not provided" }}
+          </div>
+        </section>
+
+        <section>
+          <h3 class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">
+            Projects
+          </h3>
+          <div class="mt-1 whitespace-pre-line text-sm">
+            {{ resume.projects|default:"Not provided" }}
+          </div>
+        </section>
+      </div>
+    </article>
+  </div>
+{% endblock %}
+
