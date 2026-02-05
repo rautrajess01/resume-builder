@@ -7,8 +7,6 @@ services:
     depends_on:
       db:
         condition: service_healthy
-    env_file:
-      - .env
     healthcheck:
       test: ["CMD-SHELL", "python3 -c 'import urllib.request; urllib.request.urlopen(\"http://localhost:8000\").read()' || exit 1"]
       interval: 10s
@@ -29,8 +27,6 @@ services:
     image: postgres:latest
     container_name: postgres_db
     restart: always
-    env_file:
-      - .env
     environment:
       POSTGRES_DB: ${DB_NAME}
       POSTGRES_USER: ${DB_USER}
