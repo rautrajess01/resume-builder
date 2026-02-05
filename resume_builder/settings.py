@@ -119,6 +119,8 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
 # Additional locations of static files (for Tailwind build output, etc.)
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
