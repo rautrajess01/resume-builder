@@ -13,9 +13,10 @@ pipeline {
       steps {
         withCredentials([file(credentialsId: '54bf3e26-cc62-4356-877a-b776be8f27f3', variable: 'ENV_FILE')]){
         sh '''
-        echo "Using env file: $ENV_FILE"
-        docker compose --env-file "$ENV_FILE" down
-        docker compose --env-file "$ENV_FILE" up -d --build
+        echo "Copying env file to root dir"
+        cp $ENV_FILE .env
+        docker compose down
+        docker compose up -d --build
         '''
         }
       }
