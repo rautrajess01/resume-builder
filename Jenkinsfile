@@ -14,7 +14,7 @@ pipeline {
         withCredentials([file(credentialsId: '54bf3e26-cc62-4356-877a-b776be8f27f3', variable: 'ENV_FILE')]){
         sh '''
         echo "Copying env file to root dir"
-        cp $ENV_FILE .env
+        cat $ENV_FILE > .env
         docker compose down
         docker compose up -d --build
         '''
