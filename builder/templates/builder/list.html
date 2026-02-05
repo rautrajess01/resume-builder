@@ -1,0 +1,17 @@
+{% extends 'layout.html' %}
+{% block body %}
+<h2>My Resumes</h2>
+
+<a href="{% url 'create_resume' %}">Create New Resume</a>
+
+<ul>
+{% for resume in resumes %}
+    <li>
+        {{ resume.full_name }}
+        <a href="{% url 'edit_resume' resume.id %}">Edit</a>
+        <a href="{% url 'delete_resume' resume.id %}">Delete</a>
+    </li>
+{% endfor %}
+</ul>
+
+{% endblock %}

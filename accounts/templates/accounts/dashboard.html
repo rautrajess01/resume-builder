@@ -1,0 +1,7 @@
+{% extends 'layout.html' %}
+{% block body %}
+<h2>Welcome, {{ user.username }}!</h2>
+<p>This is your dashboard.</p>
+<p><a href="{% url 'resume_list' %}">Go to My Resumes</a></p>
+
+{% endblock %}
