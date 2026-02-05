@@ -5,11 +5,14 @@ services:
     volumes: 
       - .:/app
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     env_file:
       - .env
-    networks:
-      - resume-builder
+    healthcheck:
+      test: ["CMD-SHELL", "python3 -c 'import urllib.request; urllib.request.urlopen(\"http://localhost:8000\").read()' || exit 1"]
+      interval: 10s
+      retries: 5
   nginx:
     image: nginx:alpine
     container_name: nginx_proxy
@@ -18,9 +21,10 @@ services:
       - ./staticfiles:/app/staticfiles
     ports:
       - "80:80"
-    networks:
-      - resume-builder
-  
+    depends_on:
+      web:
+        condition: service_healthy
+ 
   db:
     image: postgres:latest
     container_name: postgres_db
@@ -34,18 +38,11 @@ services:
     ports: 
       - "${DB_PORT}:${DB_PORT}"
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${DB_NAME}"]
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER}"]
       interval: 5s
       timeout: 5s
       retries: 5
     volumes:
-      - postgres_db:/var/lib/posgressql/data
-    networks:
-      - resume-builder
+      - postgres_db:/var/lib/posgresql/data
 volumes:
   postgres_db:
-
-networks:
-  resume-builder:
-    external: true
-    name: my_bridge_network
