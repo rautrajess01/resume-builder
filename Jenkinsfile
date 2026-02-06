@@ -14,7 +14,7 @@ pipeline {
     }
     stage('Run A Compose File'){
       steps {
-        withCredentials([file(credentialsId: '54bf3e26-cc62-4356-877a-b776be8f27f3', variable: 'ENV_FILE')]){
+        withCredentials([file(credentialsId: 'f435a460-5a39-4218-ac61-92c824680b73', variable: 'ENV_FILE')]){
         sh '''
         cat $ENV_FILE >> .env
         docker compose up -d  --build
@@ -24,7 +24,12 @@ pipeline {
     }
     stage('Run A Migration') {
       steps{
-        sh 'docker compose exec web python manage.py migrate'
+      withCredentials([file(credentialsId: 'f435a460-5a39-4218-ac61-92c824680b73', variable: 'ENV_FILE')]){
+        sh '''
+        docker compose exec web python manage.py migrate
+        docker compose exec web python manage.py createsuperuser --noinput
+        '''
+      }
       }
     }
   }
