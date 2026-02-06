@@ -1,9 +1,9 @@
 pipeline {
   agent any
 
-    triggers {
-        pollSCM('* * * * *')
-    }
+    // triggers {
+    //     pollSCM('* * * * *')
+    // }
   stages{
     stage('Checkout Code'){
       steps{
@@ -17,7 +17,6 @@ pipeline {
         withCredentials([file(credentialsId: '54bf3e26-cc62-4356-877a-b776be8f27f3', variable: 'ENV_FILE')]){
         sh '''
         cat $ENV_FILE >> .env
-        docker compose  down
         docker compose up -d  --build
         '''
         }
