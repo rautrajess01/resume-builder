@@ -1,9 +1,9 @@
 pipeline {
   agent any
 
-    // triggers {
-    //     pollSCM('* * * * *')
-    // }
+    triggers {
+        pollSCM('* * * * *')
+    }
   stages{
     stage('Checkout Code'){
       steps{
@@ -20,6 +20,11 @@ pipeline {
         docker compose up -d  --build
         '''
         }
+      }
+    }
+    stage('Run Tests'){
+      steps{
+        sh 'docker compose exec web python manage.py test builder'
       }
     }
     stage('Run A Migration') {
