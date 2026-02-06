@@ -13,9 +13,9 @@ pipeline {
       steps {
         withCredentials([file(credentialsId: '54bf3e26-cc62-4356-877a-b776be8f27f3', variable: 'ENV_FILE')]){
         sh '''
-        export $(grep -v '^#' "$ENV_FILE" | xargs)
+        cat $ENV_FILE >> .env
         docker compose  down
-        docker compose up -d --build
+        docker compose up --build
         '''
         }
       }
