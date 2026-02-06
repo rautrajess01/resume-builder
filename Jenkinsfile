@@ -24,12 +24,10 @@ pipeline {
     }
     stage('Run A Migration') {
       steps{
-      withCredentials([file(credentialsId: 'f435a460-5a39-4218-ac61-92c824680b73', variable: 'ENV_FILE')]){
         sh '''
+        docker compose exec web python manage.py makemigrations builder
         docker compose exec web python manage.py migrate
-        docker compose exec web python manage.py createsuperuser --noinput
         '''
-      }
       }
     }
   }
