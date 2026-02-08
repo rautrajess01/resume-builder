@@ -16,7 +16,7 @@ pipeline {
       steps {
         withCredentials([file(credentialsId: 'f435a460-5a39-4218-ac61-92c824680b73', variable: 'ENV_FILE')]){
         sh '''
-        cat $ENV_FILE >> .env
+        cat $ENV_FILE > .env
         docker compose up -d  --build
         '''
         }
