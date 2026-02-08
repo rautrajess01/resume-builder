@@ -1,6 +1,8 @@
 ## This is the Simple Resume Builder app built with Django, Postgres, Docker and Jenkins
 
 ## Project Structure
+
+```
 resume-builder/
 │
 ├── accounts/
@@ -53,4 +55,5 @@ resume-builder/
 ├── manage.py
 ├── requirements.txt
 └── README.md
+```
 
