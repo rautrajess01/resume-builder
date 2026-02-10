@@ -8,7 +8,8 @@ pipeline {
     stage('Checkout Code'){
       steps{
 
-      git branch: 'main', url: 'https://github.com/rautrajess01/resume-builder.git'
+      git branch: 'main', url: 'https://github.com/rautrajess01/resume-builder.git',
+      credentialsId: '97bcdf42-cdfd-4078-9a36-304111bd41ab'
 
       }
     }
