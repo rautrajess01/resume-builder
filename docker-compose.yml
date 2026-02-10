@@ -36,8 +36,8 @@ services:
       timeout: 5s
       retries: 5
     volumes:
-      - postgres_db:/var/lib/posgresql/data
+      - postgres_db_resume:/var/lib/posgresql/data
     env_file:
       - .env
 volumes:
-  postgres_db:
+  postgres_db_resume:
